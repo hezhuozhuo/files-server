@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "debug": "set DEBUG=files_server:* & npm start",
     "start": "node ./bin/www",
     "test": "mocha"
   },

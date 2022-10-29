@@ -1,6 +1,6 @@
 # README
 
-## express框架学习
+## express框架官网
 
 http://expressjs.com/en/starter/installing.html
 
@@ -44,6 +44,26 @@ https://pm2.io/
 | /files/upload | 上传文件接口 | POST | (multipart/form-data)file |
 | /files/download/{filename} | 文件下载 | GET |  |
 | /files | 上传文件页面（web端测试） |  |  |
+
+## vscode本地开发调试
+
+- 安装依赖
+
+    ```
+    npm install
+    ```
+
+- 运行测试
+
+    ```
+    npm run test
+    ```
+
+- 启动项目（localhost:3000）
+
+    ```
+    npm run start
+    ```
 
 ## 安装部署
 
