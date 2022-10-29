@@ -32,6 +32,10 @@ https://www.sqlite.org/doclist.html
 
 https://expressjs.com/en/resources/middleware/multer.html
 
+## pm2管理器官网
+
+https://pm2.io/
+
 ## API
 | url | 接口名称 | 请求方法 | 请求示例 |
 | --- | --- | --- | --- |
@@ -40,3 +44,35 @@ https://expressjs.com/en/resources/middleware/multer.html
 | /files/upload | 上传文件接口 | POST | (multipart/form-data)file |
 | /files/download/{filename} | 文件下载 | GET |  |
 | /files | 上传文件页面（web端测试） |  |  |
+
+## 安装部署
+
+### node.js 16.x(centos)
+
+```bash
+cd /usr/local/src/
+wget https://nodejs.org/download/release/latest-v16.x/node-v16.18.0-linux-x64.tar.gz
+tar zxvf node-v16.18.0-linux-x64.tar.gz
+cd node-v16.18.0-linux-x64
+ln -s /usr/local/src/node-v16.18.0-linux-x64/bin/node /usr/bin/node
+ln -s /usr/local/src/node-v16.18.0-linux-x64/bin/npm /usr/bin/npm
+ln -s /usr/local/src/node-v16.18.0-linux-x64/bin/npx /usr/bin/npx
+npm config set registry https://registry.npm.taobao.org
+```
+
+### pm2安装
+
+```
+npm install pm2 -g
+ln -s /usr/local/src/node-v16.18.0-linux-x64/bin/pm2 /usr/bin/pm2
+pm2
+
+```
+
+### 运行项目
+
+在项目当前目录执行：
+
+```bash
+pm2 start ./bin/www
+```
