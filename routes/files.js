@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
         `<!DOCTYPE html>
         <html>
         <body>
-          <form action="file/upload" method="post" enctype="multipart/form-data">
+          <form action="files/upload" method="post" enctype="multipart/form-data">
             <h1>选择上传的文件</h1>  
             <input type="file" name="file">
             <input type="submit" value="上传">
