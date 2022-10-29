@@ -10,7 +10,34 @@ var FILES_DIR = path.join(process.cwd(), 'public/video/')
 
 // 获取文件列表
 router.get('/list', function (req, res, next) {
-    sqlite.db.all("SELECT * FROM video", (err, rows) => {
+    var sql = "SELECT * FROM video "
+    var sql_count = "SELECT count(1) as count FROM video"
+    var count =0
+    var per_page = 0
+    var current_page = 0
+    sqlite.db.get(sql_count,(err, row) => {
+        if (err) {
+            console.log(err.message);
+            res.json({
+                code: '1000',
+                message: err.message,
+                data: {}
+            });
+        } else {
+            count = row.count
+        }
+    })
+    console.log(req.query)
+    if(req.query.current_page === undefined||req.query.per_page === undefined){
+        sql+="order by create_time desc"
+    }else{
+        per_page = req.query.per_page
+        current_page = req.query.current_page
+        var offset = (current_page-1)*per_page
+        sql+="order by create_time desc limit "+current_page+" offset "+offset
+    }
+    console.log(sql)
+    sqlite.db.all(sql, (err, rows) => {
         if (err) {
             console.log(err.message);
             res.json({
@@ -23,7 +50,10 @@ router.get('/list', function (req, res, next) {
             res.json({
                 code: '200',
                 message: '查询成功',
-                data: rows
+                data: rows,
+                total:count,
+                current_page:current_page,
+                per_page:per_page
             });
         }
     });

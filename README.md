@@ -40,7 +40,7 @@ https://pm2.io/
 | url | 接口名称 | 请求方法 | 请求示例 |
 | --- | --- | --- | --- |
 | /files/delete | 删除文件接口 | DELETE | {"id":"xxx"} |
-| /files/list | 文件列表接口 | GET |  |
+| /files/list | 文件列表接口(支持分页) | GET | ?current_page=1&&per_page=10 |
 | /files/upload | 上传文件接口 | POST | (multipart/form-data)file |
 | /files/download/{filename} | 文件下载 | GET |  |
 | /files | 上传文件页面（web端测试） |  |  |
