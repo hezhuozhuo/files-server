@@ -11,7 +11,7 @@ var cache = require("../src/cache").cache;
 // 获取文件列表
 router.get('/list', function (req, res, next) {
     var count = 0
-    var s = cache.getCache("ListCounts");
+    var s = cache.getCache("ListCount");
     if (s) {
         count = s
     } else {
@@ -33,7 +33,7 @@ router.get('/list', function (req, res, next) {
     var per_page = 0
     var current_page = 0
     if (req.query.current_page === undefined || req.query.per_page === undefined) {
-        var rows = cache.getCache("ListAlls");
+        var rows = cache.getCache("ListAll");
         if (s) {
             res.json({
                 code: '200',
