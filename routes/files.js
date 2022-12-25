@@ -30,7 +30,6 @@ router.get('/list', function (req, res, next) {
             }
         })
     }
-    var sql = "SELECT * FROM video "
     var per_page = 0
     var current_page = 0
     if (req.query.current_page === undefined || req.query.per_page === undefined) {
@@ -46,35 +45,57 @@ router.get('/list', function (req, res, next) {
             });
             return
         } else {
-            sql += "order by create_time desc"
+            sql = "SELECT * FROM video order by create_time desc"
+            sqlite.db.all(sql, (err, rows) => {
+                if (err) {
+                    console.log(err.message);
+                    res.json({
+                        code: '1000',
+                        message: err.message,
+                        data: {}
+                    });
+                } else {
+                    cache.addCache("ListAll", rows, 600 * 1000)//缓存十分钟
+                    console.log(rows);
+                    res.json({
+                        code: '200',
+                        message: '查询成功',
+                        data: rows,
+                        total: count,
+                        current_page: current_page,
+                        per_page: per_page
+                    });
+                }
+            });
         }
     } else {
         per_page = req.query.per_page
         current_page = req.query.current_page
         var offset = (current_page - 1) * per_page
-        sql += "order by create_time desc limit " + current_page + " offset " + offset
+        sql = "SELECT * FROM video order by create_time desc limit " + current_page + " offset " + offset
+        sqlite.db.all(sql, (err, rows) => {
+            if (err) {
+                console.log(err.message);
+                res.json({
+                    code: '1000',
+                    message: err.message,
+                    data: {}
+                });
+            } else {
+                cache.addCache("ListAll", rows, 600 * 1000)//缓存十分钟
+                console.log(rows);
+                res.json({
+                    code: '200',
+                    message: '查询成功',
+                    data: rows,
+                    total: count,
+                    current_page: current_page,
+                    per_page: per_page
+                });
+            }
+        });
     }
-    sqlite.db.all(sql, (err, rows) => {
-        if (err) {
-            console.log(err.message);
-            res.json({
-                code: '1000',
-                message: err.message,
-                data: {}
-            });
-        } else {
-            cache.addCache("ListAll", rows, 600 * 1000)//缓存十分钟
-            console.log(rows);
-            res.json({
-                code: '200',
-                message: '查询成功',
-                data: rows,
-                total: count,
-                current_page: current_page,
-                per_page: per_page
-            });
-        }
-    });
+    
 });
 
 
