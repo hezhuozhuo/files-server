@@ -166,7 +166,7 @@ router.post('/files/upload', upload.array('file'), (req, res) => {
 
 });
 //文件上传
-router.post('/files/files/upload', upload.array('file'), (req, res) => {
+router.post('/upload', upload.array('file'), (req, res) => {
     console.log(req.files);
     let fileList = [];
     req.files.map((elem) => {
