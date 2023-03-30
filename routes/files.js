@@ -143,7 +143,7 @@ const upload = multer({
 });
 
 //文件上传
-router.post('/upload', upload.array('file'), (req, res) => {
+router.post('/files/upload', upload.array('file'), (req, res) => {
     console.log(req.files);
     let fileList = [];
     req.files.map((elem) => {
