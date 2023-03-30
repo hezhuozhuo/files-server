@@ -165,6 +165,29 @@ router.post('/files/upload', upload.array('file'), (req, res) => {
     });
 
 });
+//文件上传
+router.post('/files/files/upload', upload.array('file'), (req, res) => {
+    console.log(req.files);
+    let fileList = [];
+    req.files.map((elem) => {
+        // 存储
+        const stmt = sqlite.db.prepare("INSERT INTO video VALUES (?,?,?,?,?)");
+        stmt.run(uuidv4(), elem.filename, 'video/' + elem.filename, elem.size, moment(Date.now()).format('YYYY-MM-DD HH:mm:ss'));
+        stmt.finalize();
+
+        fileList.push({
+            originalname: elem.originalname
+        })
+    });
+    cache.delCache("ListAll")
+    cache.delCache("ListCount")
+    res.json({
+        code: '200',
+        message: '上传成功',
+        data: { 'file_list': fileList }
+    });
+
+});
 
 // 删除文件列表
 router.delete('/delete', function (req, res, next) {
